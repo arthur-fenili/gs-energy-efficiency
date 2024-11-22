@@ -8,6 +8,10 @@ O **GS Spring Energy** é uma API desenvolvida em Java usando o framework Spring
 - [Enzo Antunes de Oliveira](https://www.linkedin.com/in/enzo-antunes/) - RM: 553185
 - [Vinício Raphael Santana](https://www.linkedin.com/in/vinício-raphael-santana/) - RM: 553813
 
+
+#### **Link do vídeo Pitch:** [Clique aqui!](https://www.youtube.com/watch?v=2qCigf0pZbI)
+#### **Link do vídeo testando aplicação hospedada na VM:** [Clique aqui!](https://youtu.be/EXP5OWOck8s)
+
 ### **Funcionalidades Principais**
 - Gerenciamento de eletrodomésticos de forma centralizada, separando dados genéricos em uma tabela `Eletrodomesticos` e informações específicas em tabelas especializadas (`Geladeiras`, `Ventiladores`, `Cafeteiras`, `Microondas`, `Lavadoras`).
 - Operações **CRUD** completas (Create, Read, Update, Delete) para cada tipo de eletrodoméstico.
