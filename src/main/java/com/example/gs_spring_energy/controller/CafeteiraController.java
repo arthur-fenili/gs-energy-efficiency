@@ -7,6 +7,9 @@ import com.example.gs_spring_energy.models.Eletrodomestico;
 import com.example.gs_spring_energy.repositories.CafeteiraRepository;
 import com.example.gs_spring_energy.repositories.EletrodomesticoRepository;
 import com.example.gs_spring_energy.service.CafeteiraMapper;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
@@ -31,6 +34,38 @@ public class CafeteiraController {
     @Autowired
     private EletrodomesticoRepository eletrodomesticoRepository;
 
+    @PostMapping("/procedure")
+    @Operation(
+            summary = "Insere uma nova cafeteira via procedure",
+            description = "Adiciona uma cafeteira no banco de dados utilizando uma procedure armazenada.",
+            requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    description = "Dados para criação de uma nova cafeteira",
+                    required = true,
+                    content = @Content(
+                            schema = @Schema(implementation = CafeteiraRequestDTO.class)
+                    )
+            )
+    )
+    public ResponseEntity<String> inserirCafeteiraProcedure(@RequestBody CafeteiraRequestDTO cafeteiraRequestDTO) {
+        cafeteiraRepository.inserirCafeteira(
+                cafeteiraRequestDTO.capacidadeAgua(),
+                cafeteiraRequestDTO.pressao(),
+                cafeteiraRequestDTO.capsulasCompativeis(),
+                cafeteiraRequestDTO.tecnologia(),
+                cafeteiraRequestDTO.eletrodomestico().voltagem(),
+                cafeteiraRequestDTO.eletrodomestico().marca(),
+                cafeteiraRequestDTO.eletrodomestico().modelo(),
+                cafeteiraRequestDTO.eletrodomestico().eficienciaEnergetica(),
+                cafeteiraRequestDTO.eletrodomestico().cor(),
+                cafeteiraRequestDTO.eletrodomestico().peso(),
+                cafeteiraRequestDTO.eletrodomestico().linkCompra()
+        );
+        return ResponseEntity.ok("Cafeteira inserida via procedure com sucesso.");
+    }
+
+
+
+    // Método original para criar cafeteira
     @PostMapping
     public ResponseEntity<EntityModel<CafeteiraResponseDTO>> criarCafeteira(@RequestBody CafeteiraRequestDTO dto) {
         Cafeteira cafeteira = cafeteiraMapper.requestToCafeteira(dto);

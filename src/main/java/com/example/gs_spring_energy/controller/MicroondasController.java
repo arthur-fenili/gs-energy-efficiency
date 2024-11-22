@@ -31,6 +31,26 @@ public class MicroondasController {
     @Autowired
     private EletrodomesticoRepository eletrodomesticoRepository;
 
+    // Método para criar um microondas via procedure
+    @PostMapping("/procedure")
+    public ResponseEntity<String> inserirMicroondasProcedure(@RequestBody MicroondasRequestDTO dto) {
+        microondasRepository.inserirMicroondas(
+                dto.diametroPrato(),
+                dto.frequencia(),
+                dto.potenciaWatts(),
+                dto.quantidadeProgramas(),
+                dto.temDescongelamento(),
+                dto.eletrodomestico().voltagem(),
+                dto.eletrodomestico().marca(),
+                dto.eletrodomestico().modelo(),
+                dto.eletrodomestico().eficienciaEnergetica(),
+                dto.eletrodomestico().cor(),
+                dto.eletrodomestico().peso(),
+                dto.eletrodomestico().linkCompra()
+        );
+        return ResponseEntity.ok("Microondas inserido via procedure com sucesso.");
+    }
+
     @PostMapping
     public ResponseEntity<EntityModel<MicroondasResponseDTO>> criarMicroondas(@RequestBody MicroondasRequestDTO dto) {
         Microondas microondas = microondasMapper.requestToMicroondas(dto);

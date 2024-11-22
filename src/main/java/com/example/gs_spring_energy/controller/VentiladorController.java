@@ -30,6 +30,25 @@ public class VentiladorController {
     @Autowired
     private EletrodomesticoRepository eletrodomesticoRepository;
 
+    // Método para criar um ventilador via procedure
+    @PostMapping("/procedure")
+    public ResponseEntity<String> inserirVentiladorProcedure(@RequestBody VentiladorRequestDTO dto) {
+        ventiladorRepository.inserirVentilador(
+                dto.quantidadePas(),
+                dto.quantidadeVelocidades(),
+                dto.temInclinacaoRegulavel(),
+                dto.tipoVentilador(),
+                dto.eletrodomestico().voltagem(),
+                dto.eletrodomestico().marca(),
+                dto.eletrodomestico().modelo(),
+                dto.eletrodomestico().eficienciaEnergetica(),
+                dto.eletrodomestico().cor(),
+                dto.eletrodomestico().peso(),
+                dto.eletrodomestico().linkCompra()
+        );
+        return ResponseEntity.ok("Ventilador inserido via procedure com sucesso.");
+    }
+
 
     @PostMapping
     public ResponseEntity<EntityModel<VentiladorResponseDTO>> criarVentilador(@RequestBody VentiladorRequestDTO dto) {

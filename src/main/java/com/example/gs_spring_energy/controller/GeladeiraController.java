@@ -30,6 +30,26 @@ public class GeladeiraController {
     @Autowired
     private EletrodomesticoRepository eletrodomesticoRepository;
 
+    // Método para inserir uma geladeira via procedure
+    @PostMapping("/procedure")
+    public ResponseEntity<String> inserirGeladeiraProcedure(@RequestBody GeladeiraRequestDTO dto) {
+        geladeiraRepository.inserirGeladeira(
+                dto.capacidadeFreezerLitros(),
+                dto.consumoKwh(),
+                dto.quantidadePortas(),
+                dto.tipoDisplay(),
+                dto.temPortaLatas(),
+                dto.eletrodomestico().voltagem(),
+                dto.eletrodomestico().marca(),
+                dto.eletrodomestico().modelo(),
+                dto.eletrodomestico().eficienciaEnergetica(),
+                dto.eletrodomestico().cor(),
+                dto.eletrodomestico().peso(),
+                dto.eletrodomestico().linkCompra()
+        );
+        return ResponseEntity.ok("Geladeira inserida via procedure com sucesso.");
+    }
+
     @PostMapping
     public ResponseEntity<EntityModel<GeladeiraResponseDTO>> criarGeladeira(@RequestBody GeladeiraRequestDTO dto) {
         Geladeira geladeira = geladeiraMapper.requestToGeladeira(dto);

@@ -25,7 +25,7 @@ public class GsSpringEnergyApplication {
 			if (Desktop.isDesktopSupported()) {
 				Desktop.getDesktop().browse(new URI(swaggerUrl));
 			} else {
-				System.out.println("Navegador padrão não suportado para abrir automaticamente o Swagger.");
+				System.out.println("Navegador padrão não suportado para abrir automaticamente o Swagger. Acesse manualmente: " + swaggerUrl);
 			}
 		} catch (Exception e) {
 			System.err.println("Erro ao tentar abrir o Swagger UI automaticamente: " + e.getMessage());

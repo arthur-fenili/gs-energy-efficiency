@@ -31,6 +31,24 @@ public class LavadoraController {
     @Autowired
     private EletrodomesticoRepository eletrodomesticoRepository;
 
+    @PostMapping("/procedure")
+    public ResponseEntity<String> inserirLavadoraProcedure(@RequestBody LavadoraRequestDTO dto) {
+        lavadoraRepository.inserirLavadora(
+                dto.capacidadeKg(),
+                dto.consumoAgua(),
+                dto.velocidadeCentrifugacaoRpm(),
+                dto.sistemaLavagem(),
+                dto.temAguaQuente(),
+                dto.eletrodomestico().voltagem(),
+                dto.eletrodomestico().marca(),
+                dto.eletrodomestico().modelo(),
+                dto.eletrodomestico().eficienciaEnergetica(),
+                dto.eletrodomestico().cor(),
+                dto.eletrodomestico().peso(),
+                dto.eletrodomestico().linkCompra()
+        );
+        return ResponseEntity.ok("Lavadora inserida via procedure com sucesso.");
+    }
 
     @PostMapping
     public ResponseEntity<EntityModel<LavadoraResponseDTO>> criarLavadora(@RequestBody LavadoraRequestDTO dto) {
