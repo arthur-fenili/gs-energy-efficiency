@@ -1,9 +1,19 @@
-FROM eclipse-temurin:17-jdk-alpine
+FROM gradle:8.10.1-jdk21-alpine AS build
 
-WORKDIR /app
+COPY --chown=gradle:gradle . /home/gradle/src
+WORKDIR /home/gradle/src
 
-COPY target/gs-spring-energy-0.0.1-SNAPSHOT.jar app.jar
+RUN gradle build --no-daemon
+
+FROM openjdk:21-jdk-slim
 
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
+WORKDIR /app
+
+COPY --from=build /home/gradle/src/build/libs/*.jar /app/gs-spring-energy-java-api.jar
+
+RUN addgroup --system appgroup && adduser --system appuser --ingroup appgroup
+USER appuser
+
+ENTRYPOINT ["java", "-jar", "/app/gs-spring-energy-java-api.jar"]
